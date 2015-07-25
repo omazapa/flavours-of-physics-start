@@ -11,11 +11,8 @@
 #include "TSystem.h"
 #include "TROOT.h"
 
-#if not defined(__CINT__) || defined(__MAKECINT__)
-needs to be included when makecint runs (ACLIC)
 #include "TMVA/Factory.h"
 #include "TMVA/Tools.h"
-#endif
 
 
 void tokenize(const string& str, vector<string>& tokens, const string& delimiters = ",") {
@@ -70,7 +67,7 @@ int convert(const string& file_name) {
     for (int i = 0; i < count_vars; i++){
       inputfile >> sep >> variables[i];
       if (sep != ',') {
-        cout << 'Error in separation';
+        cout << "Error in separation";
         return -1;
       }
     }

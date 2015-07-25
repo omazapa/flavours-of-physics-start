@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <map>
 #include <string>
 
@@ -11,11 +12,9 @@
 #include "TSystem.h"
 #include "TROOT.h"
 
-#if not defined(__CINT__) || defined(__MAKECINT__)
-needs to be included when makecint runs (ACLIC)
 #include "TMVA/Factory.h"
+#include "TMVA/Reader.h"
 #include "TMVA/Tools.h"
-#endif
 
 
 void TMVAClassification()
@@ -34,7 +33,7 @@ void TMVAClassification()
    
    TString fname = "../tau_data/training.root";
    TFile *input = TFile::Open( fname );
-   
+   outputFile->cd();//required
    TTree *tree     = (TTree*)input->Get("data");
    
    factory->AddTree(tree, "Signal", 1., "signal == 1", "Training");
@@ -64,7 +63,7 @@ void TMVAPredict()
   TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );  
   string variables_name[3] = {"LifeTime",
                            "FlightDistance",
-                           "pt"}
+                           "pt"};
   Float_t variables[3];
   for (int i=0; i < 3; i++){
     reader->AddVariable(variables_name[i].c_str(), &variables[i]);
